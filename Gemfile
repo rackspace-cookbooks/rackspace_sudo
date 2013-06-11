@@ -10,3 +10,6 @@ group :test do
   gem 'fuubar'
   gem 'test-kitchen', '< 1.0'
 end
+
+gem 'berkshelf'
+gem 'kitchen-vagrant', :group => :integration
