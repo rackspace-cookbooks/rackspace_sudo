@@ -12,4 +12,3 @@ group :test do
 end
 
 gem 'berkshelf'
-gem 'kitchen-vagrant', :group => :integration
