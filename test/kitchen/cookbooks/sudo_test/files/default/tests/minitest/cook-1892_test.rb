@@ -3,6 +3,7 @@
 # Minitest:: cook-1892
 #
 # Copyright 2012, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +28,7 @@ describe "sudo_test::default" do
   end
 
   it 'has the correct permissions for tomcat' do
-    if node['authorization']['sudo']['passwordless']
+    if node[:rackspace_sudo][:config][:authorization][:sudo][:passwordless]
       file('/etc/sudoers.d/tomcat').must_include '%tomcat  ALL=(app_user) NOPASSWD:/etc/init.d/tomcat restart'
     else
       file('/etc/sudoers.d/tomcat').must_include '%tomcat  ALL=(app_user) /etc/init.d/tomcat restart'

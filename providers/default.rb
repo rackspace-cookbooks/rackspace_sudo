@@ -1,11 +1,12 @@
 #
 # Author:: Bryan W. Berry (<bryan.berry@gmail.com>)
 # Author:: Seth Vargo (<sethvargo@gmail.com>)
-# Cookbook Name:: sudo
+# Cookbook Name:: rackspace_sudo
 # Provider:: default
 #
 # Copyright 2011, Bryan w. Berry
 # Copyright 2012, Seth Vargo
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -78,7 +79,7 @@ def render_sudoer
 
     resource = template "/etc/sudoers.d/#{new_resource.name}" do
       source        'sudoer.erb'
-      cookbook      'sudo'
+      cookbook      'rackspace_sudo'
       owner         'root'
       group         'root'
       mode          '0440'

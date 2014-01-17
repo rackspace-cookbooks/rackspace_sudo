@@ -3,6 +3,7 @@
 # Recipe:: cook-1892
 #
 # Copyright 2012, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +18,9 @@
 # limitations under the License.
 #
 
-node.default['authorization']['sudo']['include_sudoers_d'] = true
+node.default[:rackspace_sudo][:config][:authorization][:sudo][:include_sudoers_d] = true
 
-include_recipe "sudo::default"
+include_recipe "rackspace_sudo::default"
 
 # Let's test by using an example from the README
 sudo 'tomcat' do
