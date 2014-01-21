@@ -17,11 +17,12 @@
 # limitations under the License.
 #
 
+# Helpers module
 module Helpers
+  # SudoTest module
   module SudoTest
     include MiniTest::Chef::Assertions
     include MiniTest::Chef::Context
     include MiniTest::Chef::Resources
-
   end
 end

@@ -47,11 +47,11 @@ template "#{prefix}/sudoers" do
   owner 'root'
   group 'root'
   variables(
-    :sudoers_groups => node['rackspace_sudo']['config']['authorization']['sudo']['groups'],
-    :sudoers_users => node['rackspace_sudo']['config']['authorization']['sudo']['users'],
-    :passwordless => node['rackspace_sudo']['config']['authorization']['sudo']['passwordless'],
-    :include_sudoers_d => node['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'],
-    :agent_forwarding => node['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding'],
-    :sudoers_defaults => node['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']
+    sudoers_groups: node['rackspace_sudo']['config']['authorization']['sudo']['groups'],
+    sudoers_users: node['rackspace_sudo']['config']['authorization']['sudo']['users'],
+    passwordless: node['rackspace_sudo']['config']['authorization']['sudo']['passwordless'],
+    include_sudoers_d: node['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'],
+    agent_forwarding: node['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding'],
+    sudoers_defaults: node['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']
   )
 end

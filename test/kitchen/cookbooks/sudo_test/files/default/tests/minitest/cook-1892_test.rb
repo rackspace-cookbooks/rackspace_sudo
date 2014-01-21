@@ -20,7 +20,7 @@
 
 require File.expand_path('../support/helpers', __FILE__)
 
-describe "sudo_test::default" do
+describe 'sudo_test::default' do
   include Helpers::SudoTest
 
   it 'creates a tomcat sudoers file' do

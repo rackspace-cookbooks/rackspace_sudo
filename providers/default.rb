@@ -29,9 +29,9 @@ end
 # Ensure that the inputs are valid (we cannot just use the resource for this)
 def check_inputs(user, group, foreign_template, foreign_vars)
   # if group, user, and template are nil, throw an exception
-  if user == nil && group == nil && foreign_template == nil
+  if user.nil? && group.nil? && foreign_template.nil?
     Chef::Application.fatal!('You must provide a user, group, or template!')
-  elsif user != nil && group != nil && template != nil
+  elsif !user.nil? && !group.nil? && !template.nil?
     Chef::Application.fatal!('You cannot specify user, group, and template!')
   end
 end
@@ -83,11 +83,11 @@ def render_sudoer
       owner         'root'
       group         'root'
       mode          '0440'
-      variables     :sudoer => sudoer,
-                    :host => new_resource.host,
-                    :runas => new_resource.runas,
-                    :nopasswd => new_resource.nopasswd,
-                    :commands => new_resource.commands
+      variables     sudoer: sudoer,
+                    host: new_resource.host,
+                    runas: new_resource.runas,
+                    nopasswd: new_resource.nopasswd,
+                    commands: new_resource.commands
       action        :nothing
     end
   end
@@ -114,6 +114,7 @@ action :remove do
 end
 
 private
+
 # Capture a template to a string
 def capture(template)
   context = {}

@@ -20,7 +20,7 @@
 
 require File.expand_path('../support/helpers', __FILE__)
 
-describe "sudo_test::cook-2119" do
+describe 'sudo_test::cook-2119' do
   include Helpers::SudoTest
 
   it 'contains each command on a separate line' do
