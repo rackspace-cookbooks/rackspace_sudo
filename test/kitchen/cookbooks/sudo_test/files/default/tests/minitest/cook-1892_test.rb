@@ -28,7 +28,7 @@ describe "sudo_test::default" do
   end
 
   it 'has the correct permissions for tomcat' do
-    if node[:rackspace_sudo][:config][:authorization][:sudo][:passwordless]
+    if node['rackspace_sudo']['config']['authorization']['sudo']['passwordless']
       file('/etc/sudoers.d/tomcat').must_include '%tomcat  ALL=(app_user) NOPASSWD:/etc/init.d/tomcat restart'
     else
       file('/etc/sudoers.d/tomcat').must_include '%tomcat  ALL=(app_user) /etc/init.d/tomcat restart'

@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-node.default[:rackspace_sudo][:config][:authorization][:sudo][:include_sudoers_d] = true
+node.default['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'] = true
 
 include_recipe "rackspace_sudo::default"
 

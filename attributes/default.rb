@@ -18,10 +18,10 @@
 # limitations under the License.
 #
 
-default[:rackspace_sudo][:config][:authorization][:sudo][:groups]            = []
-default[:rackspace_sudo][:config][:authorization][:sudo][:users]             = []
-default[:rackspace_sudo][:config][:authorization][:sudo][:passwordless]      = false
-default[:rackspace_sudo][:config][:authorization][:sudo][:include_sudoers_d] = false
-default[:rackspace_sudo][:config][:authorization][:sudo][:agent_forwarding]  = false
-default[:rackspace_sudo][:config][:authorization][:sudo][:sudoers_defaults]  = ['!lecture,tty_tickets,!fqdn']
-default[:rackspace_sudo][:config][:authorization][:sudo][:prefix] = '/etc'
+default['rackspace_sudo']['config']['authorization']['sudo']['groups']            = []
+default['rackspace_sudo']['config']['authorization']['sudo']['users']             = []
+default['rackspace_sudo']['config']['authorization']['sudo']['passwordless']      = false
+default['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'] = false
+default['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding']  = false
+default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']  = ['!lecture,tty_tickets,!fqdn']
+default['rackspace_sudo']['config']['authorization']['sudo']['prefix'] = '/etc'

@@ -112,7 +112,7 @@ node.default['authorization']['sudo']['sudoers_defaults'] = [
 ```
 
 #### LWRP
-**Note** Sudo version 1.7.2 or newer is required to use the sudo LWRP as it relies on the "#includedir" directive introduced in version 1.7.2. The recipe does not enforce installing the version. To use this LWRP, set `node[:rackspace_sudo][:config][:authorization][:sudo][:include_sudoers_d]` to `true`.
+**Note** Sudo version 1.7.2 or newer is required to use the sudo LWRP as it relies on the "#includedir" directive introduced in version 1.7.2. The recipe does not enforce installing the version. To use this LWRP, set `node['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d']` to `true`.
 
 There are two ways for rendering a sudoer-fragment using this LWRP:
 

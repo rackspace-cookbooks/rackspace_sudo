@@ -118,7 +118,7 @@ private
 def capture(template)
   context = {}
   context.merge!(template.variables)
-  context[:node] = node
+  context['node'] = node
 
   eruby = Erubis::Eruby.new(::File.read(template_location(template)))
   return eruby.evaluate(context)
