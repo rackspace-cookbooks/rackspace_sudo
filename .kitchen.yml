@@ -1,7 +1,7 @@
 ---
 driver_plugin: vagrant
 driver_config:
-  require_chef_omnibus: true
+  require_chef_omnibus: latest
 
 platforms:
 - name: ubuntu-12.04
@@ -20,3 +20,32 @@ platforms:
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
   run_list:
   - recipe[apt]
+
+suites:
+- name: default
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rackspace_sudo]
+  - recipe[rackspace_sudo_test::default]
+  attributes: {}
+
+- name: cook-1892
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rackspace_sudo]
+  - recipe[rackspace_sudo_test::cook-1892]
+  attributes: {}
+
+- name: cook-2022
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rackspace_sudo]
+  - recipe[rackspace_sudo_test::cook-2022]
+  attributes: {}
+
+- name: cook-2119
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[rackspace_sudo]
+  - recipe[rackspace_sudo_test::cook-2119]
+  attributes: {}

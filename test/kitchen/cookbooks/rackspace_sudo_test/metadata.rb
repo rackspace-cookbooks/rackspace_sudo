@@ -1,4 +1,4 @@
-name              'rackspace_sudo'
+name              'rackspace_sudo_test'
 maintainer        'Rackspace, US Inc.'
 maintainer_email  'rackspace-cookbooks@rackspace.com'
 license           'Apache 2.0'
