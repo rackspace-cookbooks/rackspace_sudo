@@ -12,12 +12,12 @@ The platform has a package named `sudo` and the `sudoers` file is `/etc/sudoers`
 
 Attributes
 ----------
-- `node[:rackspace_sudo][:config][:authorization][:sudo'][:groups]` - groups to enable sudo access (default: `[]`)
-- `node[:rackspace_sudo][:config][:authorization][:sudo'][:users]` - users to enable sudo access (default: `[]`)
-- `node[:rackspace_sudo][:config][:authorization][:sudo'][:passwordless]` - use passwordless sudo (default: `false`)
-- `node[:rackspace_sudo][:config][:authorization][:sudo'][:include_sudoers_d]` - include and manager `/etc/sudoers.d` (default: `false`)
-- `node[:rackspace_sudo][:config][:authorization][:sudo'][:agent_forwarding]` - preserve `SSH_AUTH_SOCK` when sudoing (default: `false`)
-- `node[:rackspace_sudo][:config][:authorization][:sudo'][:sudoers_defaults]` - Array of `Defaults` entries to configure in `/etc/sudoers`
+- `node['rackspace_sudo']['config']['authorization']['sudo']['groups']` - groups to enable sudo access (default: `[]`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['users']` - users to enable sudo access (default: `[]`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['passwordless']` - use passwordless sudo (default: `false`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d']` - include and manager `/etc/sudoers.d` (default: `false`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding']` - preserve `SSH_AUTH_SOCK` when sudoing (default: `false`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']` - Array of `Defaults` entries to configure in `/etc/sudoers`
 
 
 Usage
@@ -57,23 +57,23 @@ default_attributes(
 #### Sudoers Defaults
 
 Configure a node attribute,
-`node[:rackspace_sudo][:config][:authorization][:sudo][:sudoers_defaults]` as an array of
+`node['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']` as an array of
 `Defaults` entries to configure in `/etc/sudoers`. A list of examples
 for common platforms is listed below:
 
 *Debian*
 ```ruby
-node.default[:rackspace_sudo][:config][:authorization][:sudo][:sudoers_defaults] = ['env_reset']
+node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
 ```
 
 *Ubuntu 10.04*
 ```ruby
-node.default[:rackspace_sudo][:config][:authorization][:sudo][:sudoers_defaults] = ['env_reset']
+node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
 ```
 
 *Ubuntu 12.04*
 ```ruby
-node.default[:rackspace_sudo][:config][:authorization][:sudo][:sudoers_defaults] = [
+node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = [
   'env_reset',
   'secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"'
 ]
@@ -83,7 +83,7 @@ node.default[:rackspace_sudo][:config][:authorization][:sudo][:sudoers_defaults]
 The version of sudo in RHEL 5 may not support `+=`, as used in `env_keep`, so its a single string.
 
 ```ruby
-node.default[:rackspace_sudo][:config][:authorization][:sudo][:sudoers_defaults] = [
+node.default['rackspace_sudo']['config]'['authorization']['sudo']['sudoers_defaults'] = [
   '!visiblepw',
   'env_reset',
   'env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR \
@@ -97,7 +97,7 @@ node.default[:rackspace_sudo][:config][:authorization][:sudo][:sudoers_defaults]
 
 *RHEL family 6.x*
 ```ruby
-node.default[:authorization][:sudo][:sudoers_defaults] = [
+node.default['authorization']['sudo']['sudoers_defaults'] = [
   '!visiblepw',
   'env_reset',
   'env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS"',
@@ -216,7 +216,7 @@ License and Authors
 - Author:: Adam Jacob <adam@opscode.com>
 - Author:: Seth Chisamore <schisamo@opscode.com>
 - Author:: Seth Vargo <sethvargo@gmail.com>
-- Author:: Zack Deptawa <zachary.deptawa@rackspace.com>
+- Author:: Zachary Deptawa <zachary.deptawa@rackspace.com>
 - Author:: Ted Neykov <ted.neykov@rackspace.com>
 
 ```text
