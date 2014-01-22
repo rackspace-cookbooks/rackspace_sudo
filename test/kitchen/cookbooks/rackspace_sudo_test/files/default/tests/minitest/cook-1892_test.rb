@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: sudo_test
+# Cookbook Name:: rackspace_sudo_test
 # Minitest:: cook-1892
 #
 # Copyright 2012, Opscode, Inc.
@@ -20,8 +20,8 @@
 
 require File.expand_path('../support/helpers', __FILE__)
 
-describe 'sudo_test::default' do
-  include Helpers::SudoTest
+describe 'rackspace_sudo_test::cook-1892' do
+  include Helpers::RackspaceSudoTest
 
   it 'creates a tomcat sudoers file' do
     file('/etc/sudoers.d/tomcat').must_exist

@@ -19,8 +19,8 @@
 
 # Helpers module
 module Helpers
-  # SudoTest module
-  module SudoTest
+  # RackspaceSudoTest module
+  module RackspaceSudoTest
     include MiniTest::Chef::Assertions
     include MiniTest::Chef::Context
     include MiniTest::Chef::Resources

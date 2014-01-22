@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: sudo_test
+# Cookbook Name:: rackspace_sudo_test
 # Minitest:: cook-2119
 #
 # Copyright 2012-2013, Opscode, Inc.
@@ -20,8 +20,8 @@
 
 require File.expand_path('../support/helpers', __FILE__)
 
-describe 'sudo_test::cook-2119' do
-  include Helpers::SudoTest
+describe 'rackspace_sudo_test::cook-2119' do
+  include Helpers::RackspaceSudoTest
 
   it 'contains each command on a separate line' do
     file('/etc/sudoers.d/vagrant').must_include 'vagrant  ALL=(root) /bin/du'
