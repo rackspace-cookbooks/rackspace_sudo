@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: sudo_test
+# Cookbook Name:: rackspace_sudo_test
 # Recipe:: cook-2022
 #
 # Copyright 2012, Opscode, Inc.
@@ -19,7 +19,7 @@
 #
 
 include_recipe 'rackspace_sudo::default'
-sudo 'vagrant' do
+rackspace_sudo 'vagrant' do
   user 'vagrant'
   runas 'root'
   commands ['/bin/du', '/bin/ls']

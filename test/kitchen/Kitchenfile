@@ -1,4 +1,4 @@
-cookbook 'sudo' do
+cookbook 'rackspace_sudo_test' do
   configuration "default"
   configuration "cook-1892"
   configuration "cook-2022"

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: sudo_test
+# Cookbook Name:: rackspace_sudo_test
 # Recipe:: cook-1892
 #
 # Copyright 2012, Opscode, Inc.
@@ -23,7 +23,7 @@ node.default['rackspace_sudo']['config']['authorization']['sudo']['include_sudoe
 include_recipe 'rackspace_sudo::default'
 
 # Let's test by using an example from the README
-sudo 'tomcat' do
+rackspace_sudo 'tomcat' do
   user      '%tomcat'
   runas     'app_user'
   commands  ['/etc/init.d/tomcat restart']

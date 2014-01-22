@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: sudo_test
+# Cookbook Name:: rackspace_sudo_test
 # Recipe:: cook-2022
 #
 # Copyright 2012, Opscode, Inc.
