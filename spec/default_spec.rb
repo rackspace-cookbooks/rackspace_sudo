@@ -1,54 +1,46 @@
 require 'spec_helper'
 
-describe 'sudo::default' do
+describe 'rackspace_sudo::default' do
   context 'usual business' do
-    let(:runner) do
-      ChefSpec::ChefRunner.new(platform: 'ubuntu', version: '12.04').converge 'sudo::default'
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04').converge 'rackspace_sudo::default'
     end
 
     it 'installs the sudo package' do
-      runner.should install_package 'sudo'
+      expect(chef_run).to install_package('sudo')
     end
 
     it 'creates the /etc/sudoers file' do
-      runner.should create_file_with_content '/etc/sudoers', 'Defaults      !lecture,tty_tickets,!fqdn'
+      expect(chef_run).to create_file('/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
     end
   end
 
   context 'with custom prefix' do
-    let(:runner) do
-      ChefSpec::ChefRunner.new(platform: 'ubuntu', version: '12.04') do |node|
-        node.set['authorization'] = {
-          'sudo' => {
-            'prefix' => '/secret/etc'
-          }
-        }
-      end.converge 'sudo::default'
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['prefix'] = '/secret/etc'
+      end.converge 'rackspace_sudo::default'
     end
 
     it 'creates the sudoers file in the custom location' do
-      runner.should create_file_with_content '/secret/etc/sudoers', 'Defaults      !lecture,tty_tickets,!fqdn'
+      expect(chef_run).to create_file('/secret/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
     end
   end
 
   context 'sudoers.d' do
-    let(:runner) do
-      ChefSpec::ChefRunner.new(platform: 'ubuntu', version: '12.04') do |node|
-        node.set['authorization'] = {
-          'sudo' => {
-            'include_sudoers_d' => 'true'
-          }
-        }
-      end.converge 'sudo::default'
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['rackspace_sudo']['config']['authorization']['rackspace_sudo']['include_sudoers_d'] = 'true'
+      end.converge 'rackspace_sudo::default'
     end
 
     it 'creates the sudoers.d directory' do
-      runner.should create_directory '/etc/sudoers.d'
-      runner.directory('/etc/sudoers.d').should be_owned_by 'root', 'root'
+      expect(chef_run).to create_directory('/etc/sudoers.d')
+      file('/etc/sudoers.d').must_exist.with(:owner, 'root').and(:group:, 'root')
     end
 
     it 'drops the README file' do
-      runner.should create_file_with_content '/etc/sudoers.d/README', 'As of Debian version 1.7.2p1-1, the default /etc/sudoers file created on'
+      expect(chef_run).to create_file('/etc/sudoers.d/README').with_content('As of Debian version 1.7.2p1-1, the default /etc/sudoers file created on')
     end
   end
 end

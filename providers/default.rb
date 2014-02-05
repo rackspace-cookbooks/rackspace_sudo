@@ -102,6 +102,7 @@ end
 # Default action - install a single sudoer
 action :install do
   render_sudoer
+  new_resource.updated_by_last_action(true)
 end
 
 # Removes a user from the sudoers group
