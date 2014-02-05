@@ -18,6 +18,6 @@
 # limitations under the License.
 #
 
-node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
+#node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
 
-include_recipe 'rackspace_sudo::default'
+#include_recipe 'rackspace_sudo::default'

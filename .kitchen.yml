@@ -9,43 +9,58 @@ platforms:
     box: opscode-ubuntu-12.04
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
   run_list:
-  - recipe[apt]
-- name: centos-6.4
-  driver_config:
-    box: opscode-centos-6.4
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.4_chef-provisionerless.box
-- name: debian-7.2.0
-  driver_config:
-    box: opscode-debian-7.2.0
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
-  run_list:
-  - recipe[apt]
+  - recipe[rackspace_apt]
+#- name: centos-6.4
+#  driver_config:
+#    box: opscode-centos-6.4
+#    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.4_chef-provisionerless.box
+#- name: debian-7.2.0
+#  driver_config:
+#    box: opscode-debian-7.2.0
+#    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
+#  run_list:
+#  - recipe[rackspace_apt]
 
 suites:
+# Working 02/03/14
 - name: default
   run_list:
-  - recipe[minitest-handler]
   - recipe[rackspace_sudo]
   - recipe[rackspace_sudo_test::default]
+  - recipe[minitest-handler]
   attributes: {}
 
-- name: cook-1892
-  run_list:
-  - recipe[minitest-handler]
-  - recipe[rackspace_sudo]
-  - recipe[rackspace_sudo_test::cook-1892]
-  attributes: {}
+# Working 02/05/14
+#- name: cook-1892
+#  run_list:
+#  - recipe[rackspace_sudo]
+#  - recipe[rackspace_sudo_test::cook-1892]
+#  - recipe[minitest-handler]
+#  attributes:
+#    rackspace_sudo:
+#      config:
+#        authorization:
+#          sudo:
+#            passwordless: true
+#            include_sudoers_d: true
 
-- name: cook-2022
-  run_list:
-  - recipe[minitest-handler]
-  - recipe[rackspace_sudo]
-  - recipe[rackspace_sudo_test::cook-2022]
-  attributes: {}
+# Working 02/05/14
+#- name: cook-2022
+#  run_list:
+#  - recipe[rackspace_sudo]
+#  - recipe[rackspace_sudo_test::cook-2022]
+#  - recipe[minitest-handler]
+#  attributes:
+#    rackspace_sudo:
+#      config:
+#        authorization:
+#          sudo:
+#            sudoers_defaults: ['env_reset']
 
-- name: cook-2119
-  run_list:
-  - recipe[minitest-handler]
-  - recipe[rackspace_sudo]
-  - recipe[rackspace_sudo_test::cook-2119]
-  attributes: {}
+# Working 02/05/14
+#- name: cook-2119
+#  run_list:
+#  - recipe[rackspace_sudo]
+#  - recipe[rackspace_sudo_test::cook-2119]
+#  - recipe[minitest-handler]
+#  attributes: {}
