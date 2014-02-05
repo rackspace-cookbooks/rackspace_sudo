@@ -42,6 +42,7 @@ if node['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'
 end
 
 template "#{prefix}/sudoers" do
+  cookbook node['rackspace_sudo']['templates_cookbook']['sudoers']
   source 'sudoers.erb'
   mode '0440'
   owner 'root'

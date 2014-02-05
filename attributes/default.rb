@@ -25,3 +25,4 @@ default['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'
 default['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding']  = false
 default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']  = ['!lecture,tty_tickets,!fqdn']
 default['rackspace_sudo']['config']['authorization']['sudo']['prefix'] = '/etc'
+default['rackspace_sudo']['templates_cookbook']['sudoers'] = 'rackspace_sudo'
