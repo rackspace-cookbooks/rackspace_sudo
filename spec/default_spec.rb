@@ -11,7 +11,7 @@ describe 'rackspace_sudo::default' do
     end
 
     it 'creates the /etc/sudoers file' do
-      expect(chef_run).to create_file('/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
+      expect(chef_run).to render_file('/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
     end
   end
 
@@ -23,7 +23,7 @@ describe 'rackspace_sudo::default' do
     end
 
     it 'creates the sudoers file in the custom location' do
-      expect(chef_run).to create_file('/secret/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
+      expect(chef_run).to render_file('/secret/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
     end
   end
 
@@ -35,8 +35,10 @@ describe 'rackspace_sudo::default' do
     end
 
     it 'creates the sudoers.d directory' do
-      expect(chef_run).to create_directory('/etc/sudoers.d')
-      file('/etc/sudoers.d').must_exist.with(:owner, 'root').and(:group:, 'root')
+      expect(chef_run).to create_directory('/etc/sudoers.d').with(
+        user: 'root',
+        group:  'root',
+      )
     end
 
     it 'drops the README file' do
