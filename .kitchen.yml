@@ -31,36 +31,36 @@ suites:
   attributes: {}
 
 # Working 02/05/14
-#- name: cook-1892
-#  run_list:
-#  - recipe[rackspace_sudo]
-#  - recipe[rackspace_sudo_test::cook-1892]
-#  - recipe[minitest-handler]
-#  attributes:
-#    rackspace_sudo:
-#      config:
-#        authorization:
-#          sudo:
-#            passwordless: true
-#            include_sudoers_d: true
+- name: cook-1892
+  run_list:
+  - recipe[rackspace_sudo]
+  - recipe[rackspace_sudo_test::cook-1892]
+  - recipe[minitest-handler]
+  attributes:
+    rackspace_sudo:
+      config:
+        authorization:
+          sudo:
+            passwordless: true
+            include_sudoers_d: true
 
 # Working 02/05/14
-#- name: cook-2022
-#  run_list:
-#  - recipe[rackspace_sudo]
-#  - recipe[rackspace_sudo_test::cook-2022]
-#  - recipe[minitest-handler]
-#  attributes:
-#    rackspace_sudo:
-#      config:
-#        authorization:
-#          sudo:
-#            sudoers_defaults: ['env_reset']
+- name: cook-2022
+  run_list:
+  - recipe[rackspace_sudo]
+  - recipe[rackspace_sudo_test::cook-2022]
+  - recipe[minitest-handler]
+  attributes:
+    rackspace_sudo:
+      config:
+        authorization:
+          sudo:
+            sudoers_defaults: ['env_reset']
 
 # Working 02/05/14
-#- name: cook-2119
-#  run_list:
-#  - recipe[rackspace_sudo]
-#  - recipe[rackspace_sudo_test::cook-2119]
-#  - recipe[minitest-handler]
-#  attributes: {}
+- name: cook-2119
+  run_list:
+  - recipe[rackspace_sudo]
+  - recipe[rackspace_sudo_test::cook-2119]
+  - recipe[minitest-handler]
+  attributes: {}

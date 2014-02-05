@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-#include_recipe 'rackspace_sudo::default'
+# include_recipe 'rackspace_sudo::default'
 rackspace_sudo 'vagrant' do
   user 'vagrant'
   runas 'root'
