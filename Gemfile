@@ -14,5 +14,3 @@ group :integration do
   gem 'kitchen-rackspace', '>= 0.3.0'
   gem 'serverspec', '~> 0.15.0'
 end
-
-gem 'berkshelf'
