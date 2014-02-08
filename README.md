@@ -1,6 +1,6 @@
 sudo cookbook
 =============
-The Chef `sudo` cookbook installs the `sudo` package and configures the `/etc/sudoers` file.
+The Chef `rackspace_sudo` cookbook installs the `sudo` package and configures the `/etc/sudoers` file.
 
 It also exposes an LWRP for adding and managing sudoers.
 
@@ -126,7 +126,7 @@ The LWRP also performs **fragment validation**. If a sudoer-fragment is not vali
 Example using the built-in template:
 
 ```ruby
-sudo 'tomcat' do
+rackspace_sudo 'tomcat' do
   user      "%tomcat"    # or a username
   runas     'app_user'   # or 'app_user:tomcat'
   commands  ['/etc/init.d/tomcat restart']
@@ -134,7 +134,7 @@ end
 ```
 
 ```ruby
-sudo 'tomcat' do
+rackspace_sudo 'tomcat' do
   template    'my_tomcat.erb' # local cookbook template
   variables   :cmds => ['/etc/init.d/tomcat restart']
 end
@@ -209,6 +209,13 @@ case it is not already</td>
 
 **If you use the template attribute, all other attributes will be ignored except for the variables attribute.**
 
+Contributing
+------------
+* See the guide [here](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
+
+Testing
+-------
+* See the guide [here](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
 
 License and Authors
 -------------------
