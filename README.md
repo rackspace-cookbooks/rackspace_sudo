@@ -28,11 +28,15 @@ To use attributes for defining sudoers, set the attributes above on the node (or
 ```json
 {
   "default_attributes": {
-    "authorization": {
-      "sudo": {
-        "groups": ["admin", "wheel", "sysadmin"],
-        "users": ["jerry", "greg"],
-        "passwordless": "true"
+    "rackspace_sudo": {
+      "config": {
+        "authorization": {
+          "sudo": {
+            "groups": ["admin", "wheel", "sysadmin"],
+            "users": ["jerry", "greg"],
+            "passwordless": "true"
+          }
+        }
       }
     }
   }
@@ -42,11 +46,13 @@ To use attributes for defining sudoers, set the attributes above on the node (or
 ```ruby
 # roles/example.rb
 default_attributes(
-  "authorization" => {
-    "sudo" => {
-      "groups" => ["admin", "wheel", "sysadmin"],
-      "users" => ["jerry", "greg"],
-      "passwordless" => true
+  "rackspace_sudo" => {
+    "config" => {
+      "authorization" => {
+        "sudo" => {
+          "groups" => ["admin", "wheel", "sysadmin"],
+          "users" => ["jerry", "greg"],
+          "passwordless" => true
     }
   }
 )
@@ -97,7 +103,7 @@ node.default['rackspace_sudo']['config]'['authorization']['sudo']['sudoers_defau
 
 *RHEL family 6.x*
 ```ruby
-node.default['authorization']['sudo']['sudoers_defaults'] = [
+node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = [
   '!visiblepw',
   'env_reset',
   'env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS"',
