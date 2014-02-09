@@ -1,54 +1,122 @@
 require 'spec_helper'
 
-describe 'sudo::default' do
+describe 'rackspace_sudo::default' do
+  before do
+    stub_command('which sudo').and_return(nil)
+  end
+
   context 'usual business' do
-    let(:runner) do
-      ChefSpec::ChefRunner.new(platform: 'ubuntu', version: '12.04').converge 'sudo::default'
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04').converge('rackspace_sudo::default')
     end
 
     it 'installs the sudo package' do
-      runner.should install_package 'sudo'
+      expect(chef_run).to install_package('sudo')
     end
 
     it 'creates the /etc/sudoers file' do
-      runner.should create_file_with_content '/etc/sudoers', 'Defaults      !lecture,tty_tickets,!fqdn'
+      expect(chef_run).to render_file('/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
     end
   end
 
   context 'with custom prefix' do
-    let(:runner) do
-      ChefSpec::ChefRunner.new(platform: 'ubuntu', version: '12.04') do |node|
-        node.set['authorization'] = {
-          'sudo' => {
-            'prefix' => '/secret/etc'
-          }
-        }
-      end.converge 'sudo::default'
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['prefix'] = '/secret/etc'
+      end.converge('rackspace_sudo::default')
     end
 
     it 'creates the sudoers file in the custom location' do
-      runner.should create_file_with_content '/secret/etc/sudoers', 'Defaults      !lecture,tty_tickets,!fqdn'
+      expect(chef_run).to render_file('/secret/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
+    end
+  end
+
+  context "node['rackspace_sudo']['config']['authorization']['sudo']['users']" do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['users'] = %w(bacon)
+      end.converge('rackspace_sudo::default')
+    end
+
+    it 'adds users of the bacon group to the sudoers file' do
+      expect(chef_run).to render_file('/etc/sudoers').with_content('bacon')
+    end
+  end
+
+  context "node['rackspace_sudo']['config']['authorization']['sudo']['groups']" do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['groups'] = %w(bacon)
+      end.converge('rackspace_sudo::default')
+    end
+
+    it 'adds users of the bacon group to the sudoers file' do
+      expect(chef_run).to render_file('/etc/sudoers').with_content('%bacon ALL=(ALL)')
+    end
+  end
+
+  context "node['rackspace_sudo']['config']['authorization']['sudo']['passwordless']" do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['users'] = %w(bacon)
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['groups'] = %w(bacon)
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['passwordless'] = true
+      end.converge('rackspace_sudo::default')
+    end
+
+    it 'gives users and groups passwordless sudo' do
+      expect(chef_run).to render_file('/etc/sudoers').with_content('bacon ALL=(ALL) NOPASSWD:ALL')
+      expect(chef_run).to render_file('/etc/sudoers').with_content('%bacon ALL=(ALL) NOPASSWD:ALL')
+    end
+  end
+
+  context "node['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding']" do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding'] = true
+      end.converge('rackspace_sudo::default')
+    end
+
+    it 'includes ssh forwarding in the sudoers file' do
+      expect(chef_run).to render_file('/etc/sudoers').with_content('Defaults      env_keep+=SSH_AUTH_SOCK')
+    end
+  end
+
+  context "node['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']" do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = %w(ham bacon)
+      end.converge('rackspace_sudo::default')
+    end
+
+    it 'includes each default' do
+      expect(chef_run).to render_file('/etc/sudoers').with_content('Defaults      ham')
+      expect(chef_run).to render_file('/etc/sudoers').with_content('Defaults      bacon')
+    end
+  end
+
+  context "node['rackspace_sudo']['config']['authorization']['sudo']['prefix']" do
+    context 'on Ubuntu' do
+      let(:chef_run) { ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04').converge('rackspace_sudo::default') }
+
+      it 'uses /etc' do
+        expect(chef_run).to render_file('/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
+      end
     end
   end
 
   context 'sudoers.d' do
-    let(:runner) do
-      ChefSpec::ChefRunner.new(platform: 'ubuntu', version: '12.04') do |node|
-        node.set['authorization'] = {
-          'sudo' => {
-            'include_sudoers_d' => 'true'
-          }
-        }
-      end.converge 'sudo::default'
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'] = true
+      end.converge('rackspace_sudo::default')
     end
 
     it 'creates the sudoers.d directory' do
-      runner.should create_directory '/etc/sudoers.d'
-      runner.directory('/etc/sudoers.d').should be_owned_by 'root', 'root'
-    end
-
-    it 'drops the README file' do
-      runner.should create_file_with_content '/etc/sudoers.d/README', 'As of Debian version 1.7.2p1-1, the default /etc/sudoers file created on'
+      expect(chef_run).to create_directory('/etc/sudoers.d').with(
+        owner: 'root',
+        mode:  '0755'
+      )
     end
   end
 end

@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: sudo_test
-# Minitest:: cook-2022
+# Cookbook Name:: rackspace_sudo_test
+# Recipe:: cook-1892
 #
 # Copyright 2012, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,12 +18,14 @@
 # limitations under the License.
 #
 
-require File.expand_path('../support/helpers', __FILE__)
+# node.default['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'] = true
 
-describe "sudo_test::default" do
-  include Helpers::SudoTest
+# include_recipe 'rackspace_sudo::default'
 
-  it 'has the defaults line based on the attribute' do
-    file('/etc/sudoers').must_include 'Defaults      env_reset'
-  end
+# Let's test by using an example from the README
+rackspace_sudo 'tomcat' do
+  user      '%tomcat'
+  runas     'app_user'
+  commands  ['/etc/init.d/tomcat restart']
+  nopasswd  true
 end

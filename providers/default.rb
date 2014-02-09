@@ -1,11 +1,12 @@
 #
 # Author:: Bryan W. Berry (<bryan.berry@gmail.com>)
 # Author:: Seth Vargo (<sethvargo@gmail.com>)
-# Cookbook Name:: sudo
+# Cookbook Name:: rackspace_sudo
 # Provider:: default
 #
 # Copyright 2011, Bryan w. Berry
 # Copyright 2012, Seth Vargo
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,9 +29,9 @@ end
 # Ensure that the inputs are valid (we cannot just use the resource for this)
 def check_inputs(user, group, foreign_template, foreign_vars)
   # if group, user, and template are nil, throw an exception
-  if user == nil && group == nil && foreign_template == nil
+  if user.nil? && group.nil? && foreign_template.nil?
     Chef::Application.fatal!('You must provide a user, group, or template!')
-  elsif user != nil && group != nil && template != nil
+  elsif !user.nil? && !group.nil? && !template.nil?
     Chef::Application.fatal!('You cannot specify user, group, and template!')
   end
 end
@@ -78,15 +79,15 @@ def render_sudoer
 
     resource = template "/etc/sudoers.d/#{new_resource.name}" do
       source        'sudoer.erb'
-      cookbook      'sudo'
+      cookbook      'rackspace_sudo'
       owner         'root'
       group         'root'
       mode          '0440'
-      variables     :sudoer => sudoer,
-                    :host => new_resource.host,
-                    :runas => new_resource.runas,
-                    :nopasswd => new_resource.nopasswd,
-                    :commands => new_resource.commands
+      variables     sudoer: sudoer,
+                    host: new_resource.host,
+                    runas: new_resource.runas,
+                    nopasswd: new_resource.nopasswd,
+                    commands: new_resource.commands
       action        :nothing
     end
   end
@@ -101,6 +102,7 @@ end
 # Default action - install a single sudoer
 action :install do
   render_sudoer
+  new_resource.updated_by_last_action(true)
 end
 
 # Removes a user from the sudoers group
@@ -113,11 +115,12 @@ action :remove do
 end
 
 private
+
 # Capture a template to a string
 def capture(template)
   context = {}
   context.merge!(template.variables)
-  context[:node] = node
+  context['node'] = node
 
   eruby = Erubis::Eruby.new(::File.read(template_location(template)))
   return eruby.evaluate(context)

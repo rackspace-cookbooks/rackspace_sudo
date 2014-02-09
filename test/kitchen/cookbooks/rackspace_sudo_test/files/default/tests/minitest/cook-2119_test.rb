@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: sudo_test
-# Recipe:: cook-1892
+# Cookbook Name:: rackspace_sudo_test
+# Minitest:: cook-2119
 #
-# Copyright 2012, Opscode, Inc.
+# Copyright 2012-2013, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,13 +18,13 @@
 # limitations under the License.
 #
 
-node.default['authorization']['sudo']['include_sudoers_d'] = true
+require File.expand_path('../support/helpers', __FILE__)
 
-include_recipe "sudo::default"
+describe 'rackspace_sudo_test::cook-2119' do
+  include Helpers::RackspaceSudoTest
 
-# Let's test by using an example from the README
-sudo 'tomcat' do
-  user      "%tomcat"
-  runas     'app_user'
-  commands  ['/etc/init.d/tomcat restart']
+  it 'contains each command on a separate line' do
+    file('/etc/sudoers.d/vagrant').must_include 'vagrant  ALL=(root) /bin/du'
+    file('/etc/sudoers.d/vagrant').must_include 'vagrant  ALL=(root) /bin/ls'
+  end
 end

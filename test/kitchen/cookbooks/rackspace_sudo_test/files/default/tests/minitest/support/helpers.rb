@@ -17,4 +17,12 @@
 # limitations under the License.
 #
 
-include_recipe "sudo::default"
+# Helpers module
+module Helpers
+  # RackspaceSudoTest module
+  module RackspaceSudoTest
+    include MiniTest::Chef::Assertions
+    include MiniTest::Chef::Context
+    include MiniTest::Chef::Resources
+  end
+end

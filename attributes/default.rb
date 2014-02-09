@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: sudo
+# Cookbook Name:: rackspace_sudo
 # Attribute File:: default
 #
 # Copyright 2008-2011, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,16 +18,11 @@
 # limitations under the License.
 #
 
-default['authorization']['sudo']['groups']            = []
-default['authorization']['sudo']['users']             = []
-default['authorization']['sudo']['passwordless']      = false
-default['authorization']['sudo']['include_sudoers_d'] = false
-default['authorization']['sudo']['agent_forwarding']  = false
-default['authorization']['sudo']['sudoers_defaults']  = ['!lecture,tty_tickets,!fqdn']
-
-case node['platform_family']
-when 'smartos'
-  default['authorization']['sudo']['prefix'] = '/opt/local/etc'
-else
-  default['authorization']['sudo']['prefix'] = '/etc'
-end
+default['rackspace_sudo']['config']['authorization']['sudo']['groups']            = []
+default['rackspace_sudo']['config']['authorization']['sudo']['users']             = []
+default['rackspace_sudo']['config']['authorization']['sudo']['passwordless']      = false
+default['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'] = false
+default['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding']  = false
+default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']  = ['!lecture,tty_tickets,!fqdn']
+default['rackspace_sudo']['config']['authorization']['sudo']['prefix'] = '/etc'
+default['rackspace_sudo']['templates_cookbook']['sudoers'] = 'rackspace_sudo'

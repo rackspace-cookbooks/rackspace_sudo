@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: sudo_test
-# Recipe:: cook-2022
+# Cookbook Name:: rackspace_sudo_test
+# Minitest:: default
 #
 # Copyright 2012, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +18,12 @@
 # limitations under the License.
 #
 
-node.default['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
+require File.expand_path('../support/helpers', __FILE__)
 
-include_recipe "sudo::default"
+describe 'rackspace_sudo_test::default' do
+  include Helpers::RackspaceSudoTest
+
+  it 'installs sudo' do
+    package('sudo').must_be_installed
+  end
+end

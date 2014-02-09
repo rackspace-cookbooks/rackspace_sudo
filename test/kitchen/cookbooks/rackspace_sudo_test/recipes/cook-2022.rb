@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: sudo_test
-# Minitest:: cook-2119
+# Cookbook Name:: rackspace_sudo_test
+# Recipe:: cook-2022
 #
-# Copyright 2012-2013, Opscode, Inc.
+# Copyright 2012, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,13 +18,6 @@
 # limitations under the License.
 #
 
-require File.expand_path('../support/helpers', __FILE__)
+# node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
 
-describe "sudo_test::cook-2119" do
-  include Helpers::SudoTest
-
-  it 'contains each command on a separate line' do
-    file('/etc/sudoers.d/vagrant').must_include 'vagrant  ALL=(root) /bin/du'
-    file('/etc/sudoers.d/vagrant').must_include 'vagrant  ALL=(root) /bin/ls'
-  end
-end
+# include_recipe 'rackspace_sudo::default'

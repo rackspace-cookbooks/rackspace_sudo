@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: sudo_test
-# Recipe:: default
+# Cookbook Name:: rackspace_sudo_test
+# Recipe:: cook-2022
 #
 # Copyright 2012, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,11 +18,9 @@
 # limitations under the License.
 #
 
-module Helpers
-  module SudoTest
-    include MiniTest::Chef::Assertions
-    include MiniTest::Chef::Context
-    include MiniTest::Chef::Resources
-
-  end
+# include_recipe 'rackspace_sudo::default'
+rackspace_sudo 'vagrant' do
+  user 'vagrant'
+  runas 'root'
+  commands ['/bin/du', '/bin/ls']
 end

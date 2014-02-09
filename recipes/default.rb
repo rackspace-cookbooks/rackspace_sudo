@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: sudo
+# Cookbook Name:: rackspace_sudo
 # Recipe:: default
 #
 # Copyright 2008-2011, Opscode, Inc.
+# Copyright 2014, Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,13 +18,13 @@
 # limitations under the License.
 #
 
-prefix = node['authorization']['sudo']['prefix']
+prefix = node['rackspace_sudo']['config']['authorization']['sudo']['prefix']
 
 package 'sudo' do
   action :install
 end
 
-if node['authorization']['sudo']['include_sudoers_d']
+if node['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d']
   directory "#{prefix}/sudoers.d" do
     mode        '0755'
     owner       'root'
@@ -41,16 +42,17 @@ if node['authorization']['sudo']['include_sudoers_d']
 end
 
 template "#{prefix}/sudoers" do
+  cookbook node['rackspace_sudo']['templates_cookbook']['sudoers']
   source 'sudoers.erb'
   mode '0440'
   owner 'root'
-  group platform?('freebsd') ? 'wheel' : 'root'
+  group 'root'
   variables(
-    :sudoers_groups => node['authorization']['sudo']['groups'],
-    :sudoers_users => node['authorization']['sudo']['users'],
-    :passwordless => node['authorization']['sudo']['passwordless'],
-    :include_sudoers_d => node['authorization']['sudo']['include_sudoers_d'],
-    :agent_forwarding => node['authorization']['sudo']['agent_forwarding'],
-    :sudoers_defaults => node['authorization']['sudo']['sudoers_defaults']
+    sudoers_groups: node['rackspace_sudo']['config']['authorization']['sudo']['groups'],
+    sudoers_users: node['rackspace_sudo']['config']['authorization']['sudo']['users'],
+    passwordless: node['rackspace_sudo']['config']['authorization']['sudo']['passwordless'],
+    include_sudoers_d: node['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d'],
+    agent_forwarding: node['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding'],
+    sudoers_defaults: node['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']
   )
 end

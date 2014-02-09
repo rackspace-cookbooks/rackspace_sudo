@@ -1,6 +1,6 @@
 sudo cookbook
 =============
-The Chef `sudo` cookbook installs the `sudo` package and configures the `/etc/sudoers` file.
+The Chef `rackspace_sudo` cookbook installs the `sudo` package and configures the `/etc/sudoers` file.
 
 It also exposes an LWRP for adding and managing sudoers.
 
@@ -12,12 +12,12 @@ The platform has a package named `sudo` and the `sudoers` file is `/etc/sudoers`
 
 Attributes
 ----------
-- `node['authorization']['sudo']['groups']` - groups to enable sudo access (default: `[]`)
-- `node['authorization']['sudo']['users']` - users to enable sudo access (default: `[]`)
-- `node['authorization']['sudo']['passwordless']` - use passwordless sudo (default: `false`)
-- `node['authorization']['sudo']['include_sudoers_d']` - include and manager `/etc/sudoers.d` (default: `false`)
-- `node['authorization']['sudo']['agent_forwarding']` - preserve `SSH_AUTH_SOCK` when sudoing (default: `false`)
-- `node['authorization']['sudo']['sudoers_defaults']` - Array of `Defaults` entries to configure in `/etc/sudoers`
+- `node['rackspace_sudo']['config']['authorization']['sudo']['groups']` - groups to enable sudo access (default: `[]`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['users']` - users to enable sudo access (default: `[]`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['passwordless']` - use passwordless sudo (default: `false`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d']` - include and manager `/etc/sudoers.d` (default: `false`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['agent_forwarding']` - preserve `SSH_AUTH_SOCK` when sudoing (default: `false`)
+- `node['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']` - Array of `Defaults` entries to configure in `/etc/sudoers`
 
 
 Usage
@@ -28,11 +28,15 @@ To use attributes for defining sudoers, set the attributes above on the node (or
 ```json
 {
   "default_attributes": {
-    "authorization": {
-      "sudo": {
-        "groups": ["admin", "wheel", "sysadmin"],
-        "users": ["jerry", "greg"],
-        "passwordless": "true"
+    "rackspace_sudo": {
+      "config": {
+        "authorization": {
+          "sudo": {
+            "groups": ["admin", "wheel", "sysadmin"],
+            "users": ["jerry", "greg"],
+            "passwordless": "true"
+          }
+        }
       }
     }
   }
@@ -42,11 +46,13 @@ To use attributes for defining sudoers, set the attributes above on the node (or
 ```ruby
 # roles/example.rb
 default_attributes(
-  "authorization" => {
-    "sudo" => {
-      "groups" => ["admin", "wheel", "sysadmin"],
-      "users" => ["jerry", "greg"],
-      "passwordless" => true
+  "rackspace_sudo" => {
+    "config" => {
+      "authorization" => {
+        "sudo" => {
+          "groups" => ["admin", "wheel", "sysadmin"],
+          "users" => ["jerry", "greg"],
+          "passwordless" => true
     }
   }
 )
@@ -57,23 +63,23 @@ default_attributes(
 #### Sudoers Defaults
 
 Configure a node attribute,
-`node['authorization']['sudo']['sudoers_defaults']` as an array of
+`node['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults']` as an array of
 `Defaults` entries to configure in `/etc/sudoers`. A list of examples
 for common platforms is listed below:
 
 *Debian*
 ```ruby
-node.default['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
+node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
 ```
 
 *Ubuntu 10.04*
 ```ruby
-node.default['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
+node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = ['env_reset']
 ```
 
 *Ubuntu 12.04*
 ```ruby
-node.default['authorization']['sudo']['sudoers_defaults'] = [
+node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = [
   'env_reset',
   'secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"'
 ]
@@ -83,7 +89,7 @@ node.default['authorization']['sudo']['sudoers_defaults'] = [
 The version of sudo in RHEL 5 may not support `+=`, as used in `env_keep`, so its a single string.
 
 ```ruby
-node.default['authorization']['sudo']['sudoers_defaults'] = [
+node.default['rackspace_sudo']['config]'['authorization']['sudo']['sudoers_defaults'] = [
   '!visiblepw',
   'env_reset',
   'env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR \
@@ -97,7 +103,7 @@ node.default['authorization']['sudo']['sudoers_defaults'] = [
 
 *RHEL family 6.x*
 ```ruby
-node.default['authorization']['sudo']['sudoers_defaults'] = [
+node.default['rackspace_sudo']['config']['authorization']['sudo']['sudoers_defaults'] = [
   '!visiblepw',
   'env_reset',
   'env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS"',
@@ -112,7 +118,7 @@ node.default['authorization']['sudo']['sudoers_defaults'] = [
 ```
 
 #### LWRP
-**Note** Sudo version 1.7.2 or newer is required to use the sudo LWRP as it relies on the "#includedir" directive introduced in version 1.7.2. The recipe does not enforce installing the version. To use this LWRP, set `node['authorization']['sudo']['include_sudoers_d']` to `true`.
+**Note** Sudo version 1.7.2 or newer is required to use the sudo LWRP as it relies on the "#includedir" directive introduced in version 1.7.2. The recipe does not enforce installing the version. To use this LWRP, set `node['rackspace_sudo']['config']['authorization']['sudo']['include_sudoers_d']` to `true`.
 
 There are two ways for rendering a sudoer-fragment using this LWRP:
 
@@ -126,7 +132,7 @@ The LWRP also performs **fragment validation**. If a sudoer-fragment is not vali
 Example using the built-in template:
 
 ```ruby
-sudo 'tomcat' do
+rackspace_sudo 'tomcat' do
   user      "%tomcat"    # or a username
   runas     'app_user'   # or 'app_user:tomcat'
   commands  ['/etc/init.d/tomcat restart']
@@ -134,7 +140,7 @@ end
 ```
 
 ```ruby
-sudo 'tomcat' do
+rackspace_sudo 'tomcat' do
   template    'my_tomcat.erb' # local cookbook template
   variables   :cmds => ['/etc/init.d/tomcat restart']
 end
@@ -209,6 +215,13 @@ case it is not already</td>
 
 **If you use the template attribute, all other attributes will be ignored except for the variables attribute.**
 
+Contributing
+------------
+* See the guide [here](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
+
+Testing
+-------
+* See the guide [here](https://github.com/rackspace-cookbooks/contributing/blob/master/CONTRIBUTING.md)
 
 License and Authors
 -------------------
@@ -216,9 +229,12 @@ License and Authors
 - Author:: Adam Jacob <adam@opscode.com>
 - Author:: Seth Chisamore <schisamo@opscode.com>
 - Author:: Seth Vargo <sethvargo@gmail.com>
+- Author:: Zachary Deptawa <zachary.deptawa@rackspace.com>
+- Author:: Ted Neykov <ted.neykov@rackspace.com>
 
 ```text
 Copyright 2009-2012, Opscode, Inc.
+Copyright 2014, Rackspace, US Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

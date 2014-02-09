@@ -2,6 +2,10 @@ sudo Cookbook CHANGELOG
 =======================
 This file is used to list changes made in each version of the sudo cookbook.
 
+v3.0.0
+------
+### Improvement
+Rackspace rework
 
 v2.2.0
 ------
