@@ -1,4 +1,4 @@
-sudo Cookbook CHANGELOG
+rackspace_sudo Cookbook CHANGELOG
 =======================
 This file is used to list changes made in each version of the sudo cookbook.
 
