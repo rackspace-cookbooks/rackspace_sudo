@@ -1,6 +1,6 @@
 rackspace_sudo Cookbook CHANGELOG
 =======================
-This file is used to list changes made in each version of the sudo cookbook.
+This file is used to list changes made in each version of the rackspace_sudo cookbook.
 
 v3.1.0
 ------
