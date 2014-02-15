@@ -2,6 +2,11 @@ sudo Cookbook CHANGELOG
 =======================
 This file is used to list changes made in each version of the sudo cookbook.
 
+v3.1.0
+------
+### Feature Removal
+Removed sysadmin group in sudoers.erb template from being explicitly created.
+
 v3.0.0
 ------
 ### Improvement
