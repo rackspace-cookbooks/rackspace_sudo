@@ -17,6 +17,9 @@ describe 'rackspace_sudo::default' do
     it 'creates the /etc/sudoers file' do
       expect(chef_run).to render_file('/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
     end
+    it 'creates a template' do
+      expect(chef_run).to create_template('/etc/sudoers')
+    end    
   end
 
   context 'with custom prefix' do
@@ -27,7 +30,7 @@ describe 'rackspace_sudo::default' do
     end
 
     it 'creates the sudoers file in the custom location' do
-      expect(chef_run).to render_file('/secret/etc/sudoers').with_content('Defaults      !lecture,tty_tickets,!fqdn')
+      expect(chef_run).to create_template('/secret/etc/sudoers')
     end
   end
 
