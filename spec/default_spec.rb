@@ -19,7 +19,7 @@ describe 'rackspace_sudo::default' do
     end
     it 'creates a template' do
       expect(chef_run).to create_template('/etc/sudoers')
-    end    
+    end
   end
 
   context 'with custom prefix' do
