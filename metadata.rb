@@ -3,7 +3,7 @@ maintainer        'Rackspace, US Inc.'
 maintainer_email  'rackspace-cookbooks@rackspace.com'
 license           'Apache 2.0'
 description       'Installs sudo and configures /etc/sudoers'
-version           '3.1.0'
+version           '3.1.1'
 
 recipe 'rackspace_sudo', 'Installs sudo and configures /etc/sudoers'
 
